@@ -44,7 +44,6 @@ jobs:
         env:
           AGNES_AI_API_KEY: ${{ secrets.AGNES_AI_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           OPENROUTER_KEY_GLAI: ${{ secrets.OPENROUTER_KEY_GLAI }}
           OPENROUTER_KEY_NVIDIA: ${{ secrets.OPENROUTER_KEY_NVIDIA }}
           OPENROUTER_KEY_QWEN3: ${{ secrets.OPENROUTER_KEY_QWEN3 }}
@@ -54,7 +53,7 @@ jobs:
           EXTENSION_TOKEN: ${{ secrets.TRANSLATOR_EXTENSION_TOKEN }}
         run: |
           set -euo pipefail
-          for name in AGNES_AI_API_KEY GEMINI_API_KEY GROQ_API_KEY OPENROUTER_KEY_GLAI OPENROUTER_KEY_NVIDIA OPENROUTER_KEY_QWEN3 OPENROUTER_KEY_MINIMAX OPENROUTER_FREE_API_KEY DEEPSEEK_API_KEY EXTENSION_TOKEN; do
+          for name in AGNES_AI_API_KEY GEMINI_API_KEY OPENROUTER_KEY_GLAI OPENROUTER_KEY_NVIDIA OPENROUTER_KEY_QWEN3 OPENROUTER_KEY_MINIMAX OPENROUTER_FREE_API_KEY DEEPSEEK_API_KEY EXTENSION_TOKEN; do
             value="${!name:-}"
             if [ -n "$value" ]; then
               printf '%s' "$value" | wrangler secret put "$name" --config wrangler.toml
