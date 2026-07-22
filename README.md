@@ -24,10 +24,11 @@ detected source language into Taiwan Traditional Chinese (zh-TW).
 4. The content script replaces only the matching text nodes and watches for new
    DOM content while translation is active.
 
-The backend registry supports Agnes AI, Google Gemini, Groq, OpenRouter and
-DeepSeek. A provider is enabled only when its key is configured. Model IDs use
-the same override convention as SciCover_Summary, such as GROQ_MODEL,
-GEMINI_MODEL, OPENROUTER_MODEL_FREE and DEEPSEEK_MODEL.
+The backend registry follows SciCover_Summary and supports Agnes AI, Google
+Gemini, OpenRouter and DeepSeek. Groq is not part of the active registry. A
+provider is enabled only when its key is configured. Model IDs use the same
+override convention as SciCover_Summary, such as GEMINI_MODEL,
+OPENROUTER_MODEL_FREE and DEEPSEEK_MODEL.
 
 ## Install the extension locally
 
@@ -55,17 +56,30 @@ EXTENSION_TOKEN. Do not commit .dev.vars.
 
 ## Deploy the API
 
-The GitHub Actions workflow .github/workflows/deploy-translation-api.yml
-deploys the Worker when api/ changes on main. Configure these GitHub secrets:
+The recommended setup is entirely through GitHub. Open:
+
+    Settings -> Secrets and variables -> Actions -> New repository secret
+
+Configure:
 
 - CLOUDFLARE_API_TOKEN
 - CLOUDFLARE_ACCOUNT_ID
-- Any provider keys you want to enable
 - TRANSLATOR_EXTENSION_TOKEN
+- AGNES_AI_API_KEY
+- GEMINI_API_KEY
+- OPENROUTER_KEY_GLAI
+- OPENROUTER_KEY_NVIDIA
+- OPENROUTER_KEY_QWEN3
+- OPENROUTER_KEY_MINIMAX
+- OPENROUTER_FREE_API_KEY
+- DEEPSEEK_API_KEY
 
-This workflow follows the SciCover_Summary pattern: secrets are injected at
-runtime, model slugs are environment-overridable, and provider failures fall
-through to the next configured backend.
+Add only the provider keys you want to use. There is no GROQ_API_KEY in the
+active configuration.
+
+The workflow .github/workflows/deploy-translation-api.yml injects these values
+at deployment time, following the SciCover_Summary pattern. After merging to
+main, run Actions -> Deploy translation API -> Run workflow.
 
 ## Privacy boundary
 
