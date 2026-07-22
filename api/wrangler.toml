@@ -1,7 +1,3 @@
 name = "ai-ms-edge-translator-api"
 main = "worker.js"
 compatibility_date = "2026-07-23"
-
-[vars]
-# Model IDs remain overridable through Cloudflare vars or GitHub Secrets.
-GROQ_MODEL = "openai/gpt-oss-120b"
