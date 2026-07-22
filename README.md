@@ -46,7 +46,9 @@ the user must allow the extension to access the target site.
 
 See api/README.md. In short:
 
-    npx wrangler dev --config api/wrangler.toml
+    cd api
+    npm test
+    npx wrangler dev --config wrangler.toml
 
 Create api/.dev.vars locally with provider keys and an optional
 EXTENSION_TOKEN. Do not commit .dev.vars.
@@ -64,6 +66,15 @@ deploys the Worker when api/ changes on main. Configure these GitHub secrets:
 This workflow follows the SciCover_Summary pattern: secrets are injected at
 runtime, model slugs are environment-overridable, and provider failures fall
 through to the next configured backend.
+
+## Privacy boundary
+
+When translation is started, the extension sends visible text segments plus
+page URL, title and language metadata to the configured translation API. The
+MVP does not intentionally store page content, but the configured backend and
+its AI providers may process request data according to their own terms. Do not
+use the MVP on confidential pages until the provider, retention and logging
+policies have been reviewed.
 
 ## Quality and current limitations
 
