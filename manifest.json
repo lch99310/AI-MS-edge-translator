@@ -1,34 +1,43 @@
 {
-    "manifest_version": 2,
-    "name": "Groq Chinese Translator",
-    "version": "1.0",
-    "description": "Translate web pages to Chinese using Groq API",
-    "permissions": [
-      "activeTab",
-      "storage",
-      "https://api.groq.com/"
-    ],
-    "background": {
-      "scripts": ["background.js"],
-      "persistent": false
-    },
-    "browser_action": {
-      "default_popup": "popup.html",
-      "default_icon": {
-        "16": "images/icon16.png",
-        "48": "images/icon48.png",
-        "128": "images/icon128.png"
-      }
-    },
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["content.js"]
-      }
-    ],
-    "icons": {
+  "manifest_version": 3,
+  "name": "AI MS Edge Translator",
+  "version": "0.2.0",
+  "description": "Translate visible web content into Taiwan Traditional Chinese with contextual AI translation.",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
       "16": "images/icon16.png",
       "48": "images/icon48.png",
       "128": "images/icon128.png"
     }
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
   }
+}
