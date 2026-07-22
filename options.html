@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI MS Edge Translator 設定</title>
+  <link rel="stylesheet" href="styles/options.css">
+</head>
+<body>
+  <main>
+    <h1>AI MS Edge Translator</h1>
+    <p class="intro">設定翻譯 API。Provider API key 只應放在後端或 GitHub Secrets，不要放進這裡。</p>
+
+    <label for="apiEndpoint">Translation API endpoint</label>
+    <input id="apiEndpoint" type="url" autocomplete="off"
+      placeholder="https://your-worker.example.workers.dev/translate">
+
+    <label for="apiToken">Extension token（可選）</label>
+    <input id="apiToken" type="password" autocomplete="off"
+      placeholder="與後端 EXTENSION_TOKEN 相同">
+
+    <button id="saveButton" type="button">儲存設定</button>
+    <p id="status" role="status"></p>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>
