@@ -25,6 +25,10 @@ jobs:
         with:
           node-version: 20
 
+      - name: Run API contract tests
+        working-directory: api
+        run: npm test
+
       - name: Install Wrangler
         run: npm install --global wrangler@4
 
