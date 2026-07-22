@@ -38,7 +38,7 @@ async function translateSegments(request) {
   const settings = await chrome.storage.local.get(DEFAULT_SETTINGS);
   const endpoint = String(settings.apiEndpoint || "").trim();
   if (!/^https?:\/\//i.test(endpoint)) {
-    throw new Error("Please configure a valid HTTPS API endpoint in Settings.");
+    throw new Error("Please configure a valid HTTP(S) API endpoint in Settings.");
   }
 
   const body = {
