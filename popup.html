@@ -1,57 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CH made Chinese (Mandarin) Translator</title>
-    <style>
-        body {
-            width: 300px;
-            padding: 10px;
-            font-family: Arial, sans-serif;
-        }
-        h1 {
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        #translateButton {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        #translateButton:hover {
-            background-color: #45a049;
-        }
-        #translateButton.processing {
-            background-color: #cccccc;
-            cursor: not-allowed;
-        }
-        .spinner {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #3498db;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 10px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI MS Edge Translator</title>
+  <link rel="stylesheet" href="styles/popup.css">
 </head>
 <body>
-    <h1>CH made Chinese (Mandarin) Translator</h1>
-    <button id="translateButton">Translate Page to Chinese</button>
-    <div class="spinner" id="spinner"></div>
-    <script src="popup.js"></script>
+  <main>
+    <h1>AI MS Edge Translator</h1>
+    <p class="target">所有語言 → 台灣繁體中文</p>
+    <button id="translateButton" type="button">翻譯目前頁面</button>
+    <button id="restoreButton" type="button" class="secondary">還原原文</button>
+    <p id="status" role="status">準備就緒</p>
+    <button id="settingsButton" type="button" class="link-button">開啟設定</button>
+  </main>
+  <script src="popup.js"></script>
 </body>
 </html>
