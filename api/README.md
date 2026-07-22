@@ -1,46 +1,79 @@
 # Translation API
 
-This server-side proxy follows the same configuration pattern as SciCover_Summary:
+This server-side proxy follows the same provider configuration pattern as
+[SciCover_Summary](https://github.com/lch99310/SciCover_Summary):
 
-- provider keys are environment secrets;
-- model IDs are overridable with *_MODEL;
-- providers are tried in priority order;
+- provider keys are GitHub Actions repository secrets;
+- provider priority and model defaults are defined in the backend registry;
+- model IDs remain overridable with matching *_MODEL variables when needed;
 - invalid JSON, unavailable models, quota failures, and rate limits trigger validation/fallback;
-- the browser never receives a provider API key.
+- the browser never receives a provider API key;
+- Groq is not part of the active provider registry.
 
-## Local development
+## Recommended setup: GitHub Secrets
 
-Run the contract tests:
+You do not need to create a local .dev.vars file for the normal deployment flow.
+
+In the repository, open:
+
+    Settings -> Secrets and variables -> Actions -> New repository secret
+
+Add the following secrets.
+
+Required deployment secrets:
+
+    CLOUDFLARE_API_TOKEN
+    CLOUDFLARE_ACCOUNT_ID
+    TRANSLATOR_EXTENSION_TOKEN
+
+Add one or more AI provider keys, using the same names as SciCover_Summary:
+
+    AGNES_AI_API_KEY
+    GEMINI_API_KEY
+    OPENROUTER_KEY_GLAI
+    OPENROUTER_KEY_NVIDIA
+    OPENROUTER_KEY_QWEN3
+    OPENROUTER_KEY_MINIMAX
+    OPENROUTER_FREE_API_KEY
+    DEEPSEEK_API_KEY
+
+Only provider keys that you actually configure will be enabled. The workflow
+passes these secrets to Cloudflare Worker. It never writes the values into the
+repository.
+
+The workflow is:
+
+    .github/workflows/deploy-translation-api.yml
+
+After this PR is merged, run it manually once from:
+
+    Actions -> Deploy translation API -> Run workflow
+
+It also runs automatically when api/ or the workflow file changes on main.
+
+## Worker endpoint
+
+After deployment, Cloudflare prints the Worker URL in the workflow log. The
+translation endpoint is:
+
+    https://YOUR-WORKER-DOMAIN/translate
+
+Put that URL in the Extension Options page. Put the same value used for
+TRANSLATOR_EXTENSION_TOKEN into the Extension token field.
+
+## Optional local development
+
+For local-only development, you may still run:
 
     cd api
     npm test
-
-Run the Worker locally:
-
     npx wrangler dev --config wrangler.toml
 
-Create a local .dev.vars file (never commit it):
+A local .dev.vars file is optional and must never be committed. It is not
+required for the GitHub Secrets deployment flow.
 
-    GROQ_API_KEY=replace-me
-    GROQ_MODEL=openai/gpt-oss-120b
-    EXTENSION_TOKEN=replace-with-a-local-token
-    ALLOWED_ORIGIN=*
+## Public release warning
 
-The extension default endpoint is http://localhost:8787/translate. Open the
-extension Options page and configure the same endpoint and token.
-
-## Cloudflare deployment
-
-Set only the provider secrets you want to enable:
-
-    npx wrangler secret put GROQ_API_KEY --config api/wrangler.toml
-    npx wrangler secret put GEMINI_API_KEY --config api/wrangler.toml
-    npx wrangler secret put OPENROUTER_FREE_API_KEY --config api/wrangler.toml
-    npx wrangler secret put DEEPSEEK_API_KEY --config api/wrangler.toml
-    npx wrangler secret put EXTENSION_TOKEN --config api/wrangler.toml
-
-Model IDs can be changed without editing the worker by setting the matching
-*_MODEL variable. See worker.js for the complete backend registry.
-
-For a public release, replace the shared token with per-user authentication,
-add rate limiting, and configure a narrow ALLOWED_ORIGIN.
+The shared extension token is suitable for personal MVP use only. A public
+release should use per-user authentication, rate limiting, quotas and a narrow
+ALLOWED_ORIGIN.
