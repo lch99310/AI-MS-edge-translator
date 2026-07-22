@@ -19,13 +19,6 @@ const BACKEND_CONFIGS = [
     baseUrl: "https://generativelanguage.googleapis.com/v1beta/openai/"
   },
   {
-    name: "Groq",
-    keyEnv: "GROQ_API_KEY",
-    modelEnv: "GROQ_MODEL",
-    defaultModel: "openai/gpt-oss-120b",
-    baseUrl: "https://api.groq.com/openai/v1"
-  },
-  {
     name: "OpenRouter GLAI",
     keyEnv: "OPENROUTER_KEY_GLAI",
     modelEnv: "OPENROUTER_MODEL_GLAI",
