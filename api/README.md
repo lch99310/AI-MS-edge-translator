@@ -10,9 +10,14 @@ This server-side proxy follows the same configuration pattern as SciCover_Summar
 
 ## Local development
 
-Run:
+Run the contract tests:
 
-    npx wrangler dev --config api/wrangler.toml
+    cd api
+    npm test
+
+Run the Worker locally:
+
+    npx wrangler dev --config wrangler.toml
 
 Create a local .dev.vars file (never commit it):
 
